@@ -28,6 +28,15 @@ const Checkout = ({ cart }) => {
         }
       }, [cart]);
 
+    const nextStep = () => setActiveStep((prevActiveStep)=> prevActiveStep + 1)
+    const backStep = () => setActiveStep((prevActiveStep)=> prevActiveStep - 1)
+
+    const next = (data) =>{
+        setShippingData(data)
+
+        nextStep()
+    }
+
     const Confirmation = () =>(
         <div>
             Confirmation
@@ -35,8 +44,8 @@ const Checkout = ({ cart }) => {
     )
 
     const Form = () => activeStep === 0
-        ? <AddressForm checkoutToken={checkoutToken} />
-        : <PaymentForm />
+        ? <AddressForm checkoutToken={checkoutToken} next={next}/>
+        : <PaymentForm shippingData={shippingData} checkoutToken={checkoutToken} />
 
     return (
         <>
